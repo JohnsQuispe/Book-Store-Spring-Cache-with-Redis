@@ -12,14 +12,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@AllArgsConstructor
-public class LoginRestController {
-
-    private final AuthenticationManager authenticationManager;
-    private final JwtTokenManager jwtTokenManager;
+record LoginRestController(AuthenticationManager authenticationManager, JwtTokenManager jwtTokenManager) {
 
     @PostMapping("/login")
-    public ResponseEntity<LoginOutput> authenticate (@RequestBody LoginInput loginInput) {
+    public ResponseEntity<LoginOutput> authenticate(@RequestBody LoginInput loginInput) {
 
         final UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(loginInput.getLogin(), loginInput.getPassword());
 

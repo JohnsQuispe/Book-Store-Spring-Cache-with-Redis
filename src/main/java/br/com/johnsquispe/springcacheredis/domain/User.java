@@ -3,10 +3,7 @@ package br.com.johnsquispe.springcacheredis.domain;
 import br.com.johnsquispe.springcacheredis.DatabaseConfig;
 import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
@@ -17,19 +14,31 @@ public class User {
     @GenericGenerator(name = User.TableInfo.SEQUENCE_GENERATOR,
             parameters = @org.hibernate.annotations.Parameter(name = DatabaseConfig.SEQUENCE_NAME_PARAM_VALUE, value = User.TableInfo.SEQUENCE_NAME),
             strategy = DatabaseConfig.GENERIC_GENERATOR_STRATEGY_PARAM_VALUE)
+    @GeneratedValue(generator = TableInfo.SEQUENCE_GENERATOR, strategy = GenerationType.SEQUENCE)
     private Long id;
 
     @Column(name = ColumnsInfo.NOME)
-    private String nome;
+    private String name;
 
     @Column(name = ColumnsInfo.LOGIN)
     private String login;
 
     @Column(name = ColumnsInfo.SENHA)
-    private String senha;
+    private String password;
 
     @Column(name = ColumnsInfo.CREATION_DATE)
     private LocalDateTime creationDate;
+
+    public User () {
+
+    }
+
+    public User(String name, String login, String password) {
+       this.name = name;
+       this.login = login;
+       this.password = password;
+       this.creationDate = LocalDateTime.now();
+    }
 
     public Long getId() {
         return id;
@@ -39,12 +48,12 @@ public class User {
         this.id = id;
     }
 
-    public String getNome() {
-        return nome;
+    public String getName() {
+        return name;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getLogin() {
@@ -55,12 +64,12 @@ public class User {
         this.login = login;
     }
 
-    public String getSenha() {
-        return senha;
+    public String getPassword() {
+        return password;
     }
 
-    public void setSenha(String senha) {
-        this.senha = senha;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public LocalDateTime getCreationDate() {

@@ -7,18 +7,10 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
-class UserDetailsServiceImpl implements UserDetailsService {
-
-    private final UserSearchService userSearchService;
-
-    public UserDetailsServiceImpl(UserSearchService userSearchService) {
-        this.userSearchService = userSearchService;
-    }
-
+record UserDetailsServiceImpl (UserSearchService userSearchService) implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
@@ -26,7 +18,7 @@ class UserDetailsServiceImpl implements UserDetailsService {
 
             final User user = this.userSearchService.findByLogin(username);
 
-            return new UserDetailsImpl(user.getSenha(), user.getLogin(), CollectionUtils.emptyCollection());
+            return new UserDetailsImpl(user.getPassword(), user.getLogin(), CollectionUtils.emptyCollection());
 
         } catch (DomainNotFoundException e) {
             throw new UsernameNotFoundException("User Not Found ");
