@@ -21,7 +21,7 @@ public class JwtTokenManager {
         this.jwtParser = Jwts.parser();
     }
 
-    public String generateToken (UserDetailsImpl userDetails) {
+    public String generateToken (UserDetail userDetails) {
 
         final Date expiration = new Date(new Date().getTime() + this.expirationInMillis);
 
@@ -53,13 +53,13 @@ public class JwtTokenManager {
 
     }
 
-    public UserDetailsImpl toUserDetails (String jwtToken) {
+    public UserDetail toUserDetails (String jwtToken) {
 
         final Claims claims = this.jwtParser.setSigningKey(this.secretKey)
                                                 .parseClaimsJws(jwtToken)
                                                 .getBody();
 
-        return new UserDetailsImpl(
+        return new UserDetail(
                 null,
                 claims.getSubject(),
                 Collections.emptyList()

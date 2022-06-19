@@ -17,7 +17,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 @EnableWebSecurity
 @AllArgsConstructor
-public class SecurityConfig extends WebSecurityConfigurerAdapter {
+public class SecurityApiConfig extends WebSecurityConfigurerAdapter {
 
     private JwtAuthenticationFilter jwtAuthenticationFilter;
     private JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
@@ -29,8 +29,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 
         http.authorizeHttpRequests()
-                .antMatchers("/login").permitAll()
-                .anyRequest().authenticated()
+                .antMatchers("/api/login").permitAll()
+                .antMatchers("/api/v1/**").authenticated()
                 .and()
                     .cors()
                 .and()

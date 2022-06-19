@@ -4,11 +4,12 @@ import br.com.johnsquispe.springcacheredis.DatabaseConfig;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = User.TableInfo.NAME)
-public class User {
+public class User implements Serializable {
 
     @Id
     @GenericGenerator(name = User.TableInfo.SEQUENCE_GENERATOR,

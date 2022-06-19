@@ -5,13 +5,12 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 
-public class UserDetailsImpl implements UserDetails {
-
+public class UserDetail implements UserDetails {
     private final String password;
     private final String userName;
     private final Collection<GrantedAuthority> authorities;
 
-    public UserDetailsImpl(String password, String userName, Collection<GrantedAuthority> authorities) {
+    public UserDetail(String password, String userName, Collection<GrantedAuthority> authorities) {
         this.password = password;
         this.userName = userName;
         this.authorities = authorities;
@@ -51,4 +50,5 @@ public class UserDetailsImpl implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
 }

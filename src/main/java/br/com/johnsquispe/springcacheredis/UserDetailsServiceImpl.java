@@ -10,15 +10,15 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service
-record UserDetailsServiceImpl (UserSearchService userSearchService) implements UserDetailsService {
+public record UserDetailsServiceImpl (UserSearchService userSearchService) implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
         try {
 
-            final User user = this.userSearchService.findByLogin(username);
+            final User user = this.userSearchService.findByLoginCached(username);
 
-            return new UserDetailsImpl(user.getPassword(), user.getLogin(), CollectionUtils.emptyCollection());
+            return new UserDetail(user.getPassword(), user.getLogin(), CollectionUtils.emptyCollection());
 
         } catch (DomainNotFoundException e) {
             throw new UsernameNotFoundException("User Not Found ");
